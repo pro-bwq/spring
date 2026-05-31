@@ -57,6 +57,9 @@
         <tencent.cos.version>5.6.227</tencent.cos.version>
         <ip2region.version>3.3.7</ip2region.version>
 
+        <gpg.keyname>B2EBF093A9906D8DEC63F8A36A7332DF811378C7</gpg.keyname>
+        <gpg.passphraseServerId>gpg-passphrase</gpg.passphraseServerId>
+
     </properties>
 
     <dependencyManagement>
@@ -327,10 +330,53 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.6.3</version>
                     <configuration>
-                        <skip>true</skip>
+                        <failOnError>false</failOnError>
+                        <additionalJOptions>
+                            <additionalJOption>-Xdoclint:none</additionalJOption>
+                        </additionalJOptions>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- GPG 签名插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                            <configuration>
+                                <keyname>${gpg.keyname}</keyname>
+                                <passphraseServerId>${gpg.passphraseServerId}</passphraseServerId>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- 中央仓库发布插件 -->
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>0.9.0</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <publishingServerId>central</publishingServerId>
+                        <autoPublish>true</autoPublish>  <!-- 自动发布 -->
                     </configuration>
                 </plugin>
 
@@ -338,55 +384,6 @@
 
         </pluginManagement>
 
-        <plugins>
-            <!-- 生成 Javadoc 包 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.6.3</version>
-                <configuration>
-                    <failOnError>false</failOnError>
-                    <additionalJOptions>
-                        <additionalJOption>-Xdoclint:none</additionalJOption>
-                    </additionalJOptions>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals><goal>jar</goal></goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- GPG 签名 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- 中央仓库发布插件（新版，推荐） -->
-            <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.9.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <publishingServerId>central</publishingServerId>
-                    <autoPublish>true</autoPublish>
-                </configuration>
-            </plugin>
-
-        </plugins>
     </build>
 
     <licenses>
@@ -409,5 +406,13 @@
         <developerConnection>scm:git:ssh://github.com:pro-bwq/spring.git</developerConnection>
         <url>https://github.com/pro-bwq/spring.git</url>
     </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>Maven Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </distributionManagement>
 
 </project>
