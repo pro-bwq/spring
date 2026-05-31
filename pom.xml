@@ -107,6 +107,11 @@
                 <artifactId>bwq-framework-gateway</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.github.pro-bwq</groupId>
+                <artifactId>bwq-framework-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
 
             <!-- 第三方依赖 -->
