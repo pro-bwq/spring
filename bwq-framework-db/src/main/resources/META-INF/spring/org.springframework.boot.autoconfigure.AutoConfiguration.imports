@@ -1,0 +1,4 @@
+
+com.bwq.framework.db.mybatis.config.MybatisPlusConfig
+com.bwq.framework.db.mybatis.config.MultiTenantConfig
+com.bwq.framework.db.mybatis.handler.BaseMetaObjectHandler
