@@ -13,6 +13,7 @@
     <packaging>jar</packaging>
 
     <artifactId>bwq-framework-db</artifactId>
+    <name>bwq-framework-db</name>
     <description>Mysql with Druid + MyBatis-Plus</description>
 
     <dependencies>
@@ -67,7 +68,27 @@
             <optional>true</optional>
         </dependency>
 
-
     </dependencies>
 
+    <build>
+        <plugins>
+            <!-- 打包源码包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+
+            <!-- 打包 javadoc 包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+
+            <!-- GPG 签名 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

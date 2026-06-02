@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <artifactId>bwq-framework-starter</artifactId>
-    <description></description>
+    <name>bwq-framework-starter</name>
 
     <dependencies>
         <!-- 按需引入需要的模块 -->
@@ -40,5 +40,26 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <!-- 打包源码包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+
+            <!-- 打包 javadoc 包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+
+            <!-- GPG 签名 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

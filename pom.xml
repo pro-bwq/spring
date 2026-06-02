@@ -384,11 +384,22 @@
                         <autoPublish>true</autoPublish>  <!-- 自动发布 -->
                     </configuration>
                 </plugin>
-
             </plugins>
 
         </pluginManagement>
 
+        <plugins>
+            <!-- Central Portal 发布插件 -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 
     <licenses>
@@ -415,9 +426,14 @@
     <distributionManagement>
         <repository>
             <id>central</id>
-            <name>Maven Central Repository</name>
-            <url>https://repo.maven.apache.org/maven2</url>
+            <name>Central Portal Releases</name>
+            <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
         </repository>
+        <snapshotRepository>
+            <id>central</id>
+            <name>Central Portal Snapshots</name>
+            <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
+        </snapshotRepository>
     </distributionManagement>
 
 </project>

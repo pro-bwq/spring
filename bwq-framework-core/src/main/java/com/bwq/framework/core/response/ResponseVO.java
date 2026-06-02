@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 
 /**
@@ -101,7 +100,7 @@ public class ResponseVO<T> extends BaseVO{
 
         ResponseVO<T> response = new ResponseVO<>();
         response.setCode(ResultCode.FAILURE.getValue());
-        response.setMsg(ResultCode.FAILURE.getLabel());
+        response.setMessage(ResultCode.FAILURE.getLabel());
         return response;
     }
 
@@ -113,7 +112,7 @@ public class ResponseVO<T> extends BaseVO{
 
         ResponseVO<T> response = new ResponseVO<>();
         response.setCode(ResultCode.FAILURE.getValue());
-        response.setMsg(message);
+        response.setMessage(message);
         return response;
     }
 
@@ -127,7 +126,7 @@ public class ResponseVO<T> extends BaseVO{
     public static <T> ResponseVO<T> failure(int code, String message) {
         ResponseVO<T> response = new ResponseVO<>();
         response.setCode(code);
-        response.setMsg(message);
+        response.setMessage(message);
         return response;
     }
 
@@ -142,7 +141,7 @@ public class ResponseVO<T> extends BaseVO{
         ResponseVO<T> response = new ResponseVO<>();
         response.setCode(en.getValue());
         String message = en.getLabel();
-        if (extraMsg != null && StringUtils.isNotBlank(extraMsg.trim())){
+        if (extraMsg != null && !extraMsg.isBlank()){
             if (en == ResultCode.BUSINESS_ERROR){
                 message = extraMsg.trim();
             }else
@@ -154,7 +153,7 @@ public class ResponseVO<T> extends BaseVO{
             }
         }
         log.info("CORE======message======={}",message);
-        response.setMsg(message);
+        response.setMessage(message);
         return response;
     }
 
@@ -167,7 +166,7 @@ public class ResponseVO<T> extends BaseVO{
     public static <T> ResponseVO<T> failure(ResultCode en) {
         ResponseVO<T> response = new ResponseVO<>();
         response.setCode(en.getValue());
-        response.setMsg(en.getLabel());
+        response.setMessage(en.getLabel());
         return response;
     }
 
