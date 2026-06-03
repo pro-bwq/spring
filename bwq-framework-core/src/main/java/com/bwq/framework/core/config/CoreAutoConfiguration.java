@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CoreAutoConfiguration {
 
-
     @Bean
     @ConditionalOnMissingBean
     public GlobalExceptionHandler globalExceptionHandler() {

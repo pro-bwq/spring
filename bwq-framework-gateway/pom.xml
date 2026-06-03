@@ -16,9 +16,7 @@
     <name>bwq-framework-gateway</name>
     <description>网关（gateway）</description>
 
-
     <dependencies>
-
         <dependency>
             <groupId>io.github.pro-bwq</groupId>
             <artifactId>bwq-framework-common</artifactId>
@@ -27,22 +25,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
-        </dependency>
-
-        <!-- JWT -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-            <scope>runtime</scope>
         </dependency>
 
         <dependency>

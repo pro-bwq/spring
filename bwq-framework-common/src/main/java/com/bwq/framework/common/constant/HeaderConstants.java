@@ -13,20 +13,16 @@ public final class HeaderConstants {
     }
 
 
-    // ========== 用户信息 ==========
+    // ========== 基础认证（必须） ==========
     public static final String X_USER_ID = "X-User-Id";
-    public static final String X_USER_NAME = "X-User-Name";
     public static final String X_TENANT_ID = "X-Tenant-Id";
-    public static final String X_AVATAR_URL = "X-Avatar-Url";
-
-
-    // ========== 权限信息 ==========
     public static final String X_ROLES = "X-Roles";
     public static final String X_PERMISSIONS = "X-Permissions";
 
-
-    // ========== 请求追踪 ==========
-    public static final String X_REQUEST_ID = "X-Request-Id";
-    public static final String X_TRACE_ID = "X-Trace-Id";
+    // ========== 公共属性（可选） ==========
+    public static final String X_USER_NAME = "X-User-Name";
+    public static final String X_AVATAR_URL = "X-Avatar-Url";
+    public static final String X_EMAIL = "X-Email";
+    public static final String X_MOBILE = "X-Mobile";
 }
 

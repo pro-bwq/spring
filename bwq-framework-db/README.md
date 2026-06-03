@@ -20,3 +20,34 @@ application.yml
 → MybatisPlusPropertiesCustomizer（修改）
 → MybatisPlusAutoConfiguration（使用）
 → SqlSessionFactory
+
+
+## 租户
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           执行流程                                       │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  调用 Mapper 方法（带 @IgnoreTenant）                                    │
+│         │                                                               │
+│         ▼                                                               │
+│  AOP 切面（IgnoreTenantAspect）检测到注解                                │
+│         │                                                               │
+│         ▼                                                               │
+│  UserContext.setIgnoreTenant(true)                                      │
+│         │                                                               │
+│         ▼                                                               │
+│  执行 Mapper 方法                                                        │
+│         │                                                               │
+│         ▼                                                               │
+│  MyBatis-Plus 调用 MultiTenantHandler                                   │
+│         │                                                               │
+│         ├── getTenantId() → 检查 isIgnoreTenant() → 返回 NullValue      │
+│         └── ignoreTable() → 检查 isIgnoreTenant() → 返回 true           │
+│         │                                                               │
+│         ▼                                                               │
+│  执行 SQL（不添加 tenant_id 过滤）                                       │
+│         │                                                               │
+│         ▼                                                               │
+│  AOP After 执行 UserContext.clearIgnoreTenant()                         │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘

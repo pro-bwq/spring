@@ -1,7 +1,6 @@
 package com.bwq.framework.db.mybatis.handler;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
-import com.bwq.framework.common.tenant.TenantContext;
 import com.bwq.framework.common.user.UserContext;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -59,14 +58,18 @@ public class MultiTenantHandler implements TenantLineHandler {
                 DEFAULT_IGNORE_TABLES, customIgnoreTables);
     }
 
-
     @Override
     public Expression getTenantId() {
-        // 直接从 UserContext 获取租户 ID
+        // 最高优先级：检查是否忽略租户
+        if (UserContext.isIgnoreTenant()) {
+            log.debug("当前线程忽略租户过滤，返回 null");
+            return new NullValue();
+        }
+
         Long tenantId = UserContext.getTenantId();
         log.debug("当前租户 ID: {}", tenantId);
 
-        if (tenantId == null) {
+        if (tenantId == null || tenantId <= 0) {
             return new NullValue();
         }
         return new LongValue(tenantId);
@@ -79,6 +82,12 @@ public class MultiTenantHandler implements TenantLineHandler {
 
     @Override
     public boolean ignoreTable(String tableName) {
+        // 最高优先级：检查是否忽略租户
+        if (UserContext.isIgnoreTenant()) {
+            log.debug("当前线程忽略租户过滤，表名: {}", tableName);
+            return true;
+        }
+
         // 追加模式：默认表或自定义表，任一匹配就忽略
         boolean ignore = DEFAULT_IGNORE_TABLES.contains(tableName) ||
                 customIgnoreTables.contains(tableName);
@@ -87,4 +96,5 @@ public class MultiTenantHandler implements TenantLineHandler {
         }
         return ignore;
     }
+
 }

@@ -99,6 +99,8 @@ public enum ResultCode implements IBaseEnum<Integer> {
      */
     TRAFFIC_LIMITING(241008, "哎呀，网络拥挤请稍后再试试"),
 
+
+
     SERVLET_ERROR(241010, "servlet错误"),
     JSON_ERROR(241011, "json错误"),
     TYPE_MATCH_ERROR(241012, "类型不匹配错误"),

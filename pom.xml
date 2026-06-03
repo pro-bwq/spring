@@ -32,6 +32,7 @@
         <spring-boot.version>3.2.5</spring-boot.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <mybatis-plus.version>3.5.15</mybatis-plus.version>
+        <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
         <lombok.version>1.18.32</lombok.version>
         <redisson.version>3.24.3</redisson.version>
         <commons-pool2.version>2.12.0</commons-pool2.version>
@@ -132,6 +133,12 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-jsqlparser</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- 动态数据源（多数据源支持） -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+                <version>${dynamic-datasource.version}</version>
             </dependency>
             <!-- Redisson -->
             <dependency>
@@ -277,12 +284,6 @@
                 <artifactId>jackson-datatype-jsr310</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-
-<!--            <dependency>-->
-<!--                <groupId>com.alibaba</groupId>-->
-<!--                <artifactId>fastjson</artifactId>-->
-<!--                <version>${fastjson.version}</version>-->
-<!--            </dependency>-->
 
             <dependency>
                 <groupId>org.lionsoul</groupId>
