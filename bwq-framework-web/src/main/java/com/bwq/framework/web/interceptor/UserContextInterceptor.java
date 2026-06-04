@@ -4,15 +4,13 @@ import com.bwq.framework.common.constant.HeaderConstants;
 import com.bwq.framework.common.user.UserContext;
 import com.bwq.framework.common.user.UserInfo;
 import com.bwq.framework.common.util.CommonConvertUtil;
+import com.bwq.framework.web.util.HandlerUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author bwq
@@ -22,18 +20,23 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Order(2)  // 优先级低于 TokenParseInterceptor
+@RequiredArgsConstructor
 public class UserContextInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        // 从请求头解析用户信息
-        String userId = request.getHeader(HeaderConstants.X_USER_ID);
 
-        // 无用户信息（匿名请求）
-        if (userId == null || userId.isEmpty()) {
-            log.debug("请求头中无用户信息，可能为匿名请求");
+        String path = request.getRequestURI();
+        log.debug("==UserContextInterceptor，拦截器拦截====path={}",path);
+
+        // 检查 @Public 注解
+        if (HandlerUtil.isPublic(handler)) {
+            log.debug("@Public 接口，跳过用户上下文设置: {}", path);
             return true;
         }
+
+        // 从请求头解析用户信息
+        String userId = request.getHeader(HeaderConstants.X_USER_ID);
 
         // 如果 UserContext 已有用户信息（由 TokenParseInterceptor 设置），跳过重复设置
         if (UserContext.getUserId() != null) {

@@ -1,6 +1,6 @@
-package com.bwq.ecommerce.validation.annotation;
+package com.bwq.framework.core.annotation.validation;
 
-import com.bwq.ecommerce.validation.validator.LatitudeValidator;
+import com.bwq.framework.core.annotation.validator.LatitudeValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

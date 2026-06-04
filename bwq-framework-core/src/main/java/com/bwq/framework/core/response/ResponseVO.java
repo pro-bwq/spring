@@ -1,10 +1,15 @@
 package com.bwq.framework.core.response;
 
 import com.bwq.framework.core.base.BaseVO;
+import com.bwq.framework.core.util.DateUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 
 /**
@@ -29,8 +34,8 @@ public class ResponseVO<T> extends BaseVO{
     @Schema(description = "响应内容")
     private T data;
 
-    @Schema(description = "时间戳")
-    private Long timestamp;
+    @Schema(description = "服务器时间")
+    private String serverTime;
 
 
     /***
@@ -39,7 +44,7 @@ public class ResponseVO<T> extends BaseVO{
     public ResponseVO(){
         this.setCode(ResultCode.SUCCESS.getValue());
         this.setMessage(ResultCode.SUCCESS.getLabel());
-        this.setTimestamp(System.currentTimeMillis());
+        this.setServerTime(DateUtils.formatDateTime(LocalDateTime.now(ZoneId.of("Asia/Shanghai"))));
     }
 
     /**
@@ -151,7 +156,6 @@ public class ResponseVO<T> extends BaseVO{
                 message += "，" + extraMsg.trim();
             }
         }
-        log.info("CORE======message======={}",message);
         response.setMessage(message);
         return response;
     }

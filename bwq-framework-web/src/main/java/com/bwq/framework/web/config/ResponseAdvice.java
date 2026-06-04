@@ -32,6 +32,13 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         if (className.contains("springdoc") || className.contains("knife4j")) {
             return false;
         }
+
+        // 如果已经是 ResponseVO，不重复包装
+        Class<?> returnClass = returnType.getMethod().getReturnType();
+        if (returnClass == ResponseVO.class) {
+            return false;
+        }
+
         return true;
     }
 

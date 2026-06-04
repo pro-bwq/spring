@@ -1,6 +1,6 @@
-package com.bwq.ecommerce.validation.validator;
+package com.bwq.framework.core.annotation.validator;
 
-import com.bwq.ecommerce.validation.annotation.IdCard;
+import com.bwq.framework.core.annotation.validation.IdCard;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.extern.slf4j.Slf4j;

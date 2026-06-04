@@ -166,7 +166,6 @@ public class WebExceptionHandler {
     }
 
     // ==================== 文件上传异常 ====================
-
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseVO<Void> handleMaxUploadSize(MaxUploadSizeExceededException e) {
@@ -184,9 +183,7 @@ public class WebExceptionHandler {
         return ResponseVO.failure(409, message);
     }
 
-
     // ==================== 第三方组件异常 ====================
-
 //    @ExceptionHandler(com.alibaba.excel.exception.ExcelGenerateException.class)
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 //    public ResponseVO<Void> handleExcelGenerate(com.alibaba.excel.exception.ExcelGenerateException e) {
@@ -252,16 +249,6 @@ public class WebExceptionHandler {
         log.warn("参数绑定失败: {}", message);
         return ResponseVO.failure(400, message);
     }
-
-
-    // ========== 文件上传异常 ==========
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseVO<Void> handleUploadSizeExceeded(MaxUploadSizeExceededException e) {
-        log.warn("==========MaxUploadSizeExceededException:{}", e.getMessage());
-        String errorMsg = e.getMessage();
-        return ResponseVO.failure(400, "文件大小超过限制");
-    }
-
 
     // ========== 第三方组件异常 ==========
     //    @ExceptionHandler(ExcelGenerateException.class)

@@ -1,4 +1,5 @@
 com.bwq.framework.web.config.Knife4jConfig
 com.bwq.framework.web.config.WebMvcConfig
 com.bwq.framework.web.config.ResponseAdvice
+com.bwq.framework.web.config.PreventDuplicateAutoConfig
 com.bwq.framework.web.handler.WebExceptionHandler

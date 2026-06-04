@@ -3,7 +3,7 @@ package com.bwq.framework.web.config;
 import com.bwq.framework.web.interceptor.UserContextInterceptor;
 import com.bwq.framework.web.interceptor.TokenParseInterceptor;
 import com.bwq.framework.web.properties.JwtProperties;
-import lombok.RequiredArgsConstructor;
+import com.bwq.framework.web.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -14,6 +14,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
 /**
  * @author bwq
  * @date 2026-05-31 12:15:43
@@ -22,16 +24,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Slf4j
 @Configuration
 @ConditionalOnWebApplication
-@EnableConfigurationProperties(JwtProperties.class)
-@RequiredArgsConstructor
+@EnableConfigurationProperties({JwtProperties.class, SecurityProperties.class})
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private final TokenParseInterceptor tokenParseInterceptor;
-    private final UserContextInterceptor userContextInterceptor;
+    private final JwtProperties jwtProperties;
+    private final SecurityProperties securityProperties;
+
+    // 注入 JwtProperties SecurityProperties，不注入拦截器
+    public WebMvcConfig(JwtProperties jwtProperties,SecurityProperties securityProperties) {
+        this.jwtProperties = jwtProperties;
+        this.securityProperties = securityProperties;
+    }
 
     @Bean
     @ConditionalOnMissingBean
-    public TokenParseInterceptor tokenParseInterceptor(JwtProperties jwtProperties) {
+    public TokenParseInterceptor tokenParseInterceptor() {
         return new TokenParseInterceptor(jwtProperties);
     }
 
@@ -61,25 +68,34 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
+        // 白名单路径（不需要拦截）
+        List<String> whitelist = securityProperties.getMergedWhitelist();
+
+        // 获取 Token 解析拦截器（可能为 null，取决于配置）
+        TokenParseInterceptor tokenInterceptor = null;
+        try {
+            tokenInterceptor = tokenParseInterceptor();
+        } catch (Exception e) {
+            log.debug("Token 解析拦截器未启用");
+        }
+
         // Token 解析拦截器（优先级高，先执行）- 仅在启用时生效
-        if (tokenParseInterceptor != null){
-            registry.addInterceptor(tokenParseInterceptor)
+        if (tokenInterceptor != null){
+            registry.addInterceptor(tokenInterceptor)
                     .addPathPatterns("/**")
+                    // 排除白名单
+                    .excludePathPatterns(whitelist)
                     .order(1);
+            log.debug("Token 解析拦截器已注册，白名单: {}", whitelist);
         }
 
         // 用户上下文拦截器（优先级低，后执行）
-        registry.addInterceptor(userContextInterceptor)
+        registry.addInterceptor(userContextInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns(
-                        "/swagger-resources/**",
-                        "/webjars/**",
-                        "/v3/api-docs/**",
-                        "/doc.html",
-                        "/actuator/**"
-                );
-        log.debug("用户上下文拦截器已注册");
-        log.info("Token 解析拦截器已注册（启用状态: {}）", tokenParseInterceptor != null);
+                // 排除白名单
+                .excludePathPatterns(whitelist)
+                .order(2);
+        log.debug("用户上下文拦截器已注册，白名单: {}", whitelist);
     }
 }
 

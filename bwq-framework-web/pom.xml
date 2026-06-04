@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.pro-bwq</groupId>
         <artifactId>bwq-framework</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>bwq-framework-web</artifactId>
@@ -14,15 +14,20 @@
 
     <dependencies>
 
+        <!-- Spring Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.github.pro-bwq</groupId>
             <artifactId>bwq-framework-common</artifactId>
         </dependency>
 
-        <!-- Spring Web -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>io.github.pro-bwq</groupId>
+            <artifactId>bwq-framework-redis</artifactId>
         </dependency>
 
         <!-- API 文档 -->
@@ -36,6 +41,12 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
 
     </dependencies>
 

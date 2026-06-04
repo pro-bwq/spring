@@ -1,3 +1,2 @@
 com.bwq.framework.redis.config.RedisConfig
-com.bwq.framework.redis.config.RedissonConfig
 com.bwq.framework.redis.core.RedisHelper

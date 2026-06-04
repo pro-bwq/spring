@@ -9,14 +9,14 @@ spring轻量级框架
 <dependency>
     <groupId>io.github.pro-bwq</groupId>
     <artifactId>bwq-framework-core</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
 </dependency>
 
 <!-- 需要数据库功能时再加 -->
 <dependency>
     <groupId>io.github.pro-bwq</groupId>
     <artifactId>bwq-framework-db</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
 </dependency>
 等等
 
@@ -30,7 +30,7 @@ spring轻量级框架
         <dependency>
             <groupId>io.github.pro-bwq</groupId>
             <artifactId>bwq-framework</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2-SNAPSHOT</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>

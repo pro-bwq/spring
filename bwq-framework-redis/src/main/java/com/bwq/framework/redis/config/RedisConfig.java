@@ -24,7 +24,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 @ConditionalOnClass(RedisTemplate.class) // 必须引入了 spring-boot-starter-data-redis 依赖
-@ConditionalOnBean(RedisConnectionFactory.class)
 public class RedisConfig {
 
     /**
@@ -34,7 +33,7 @@ public class RedisConfig {
      * @return RedisTemplate
      */
     @Bean
-    @ConditionalOnMissingBean(name = "redisTemplate")
+    @ConditionalOnMissingBean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);

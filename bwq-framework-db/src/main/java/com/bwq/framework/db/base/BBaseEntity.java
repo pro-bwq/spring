@@ -41,7 +41,4 @@ public abstract class BBaseEntity implements Serializable {
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
     private Integer deleted;
-
-    @Version
-    private Integer version;
 }

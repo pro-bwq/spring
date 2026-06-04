@@ -1,6 +1,6 @@
-package com.bwq.ecommerce.validation.validator;
+package com.bwq.framework.core.annotation.validator;
 
-import com.bwq.ecommerce.validation.annotation.Longitude;
+import com.bwq.framework.core.annotation.validation.Longitude;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

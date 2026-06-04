@@ -29,7 +29,7 @@ public class MultiTenantConfig {
     @Bean
     @ConditionalOnMissingBean
     public TenantLineInnerInterceptor tenantLineInnerInterceptor() {
-        log.info("初始化多租户拦截器");
+        log.debug("初始化多租户拦截器");
         return new TenantLineInnerInterceptor(multiTenantHandler);
     }
 }

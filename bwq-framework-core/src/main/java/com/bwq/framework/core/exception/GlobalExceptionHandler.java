@@ -1,24 +1,15 @@
 package com.bwq.framework.core.exception;
 
-import com.bwq.framework.core.response.ResultCode;
 import com.bwq.framework.core.response.ResponseVO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import jakarta.servlet.ServletException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.sql.SQLSyntaxErrorException;
-import java.util.concurrent.CompletionException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author bwq

@@ -1,6 +1,6 @@
-package com.bwq.ecommerce.validation.annotation;
+package com.bwq.framework.core.annotation.validation;
 
-import com.bwq.ecommerce.validation.validator.IdCardValidator;
+import com.bwq.framework.core.annotation.validator.IdCardValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

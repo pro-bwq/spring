@@ -16,7 +16,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(RedisHelper.class)
 @EnableAspectJAutoProxy
-public class PreventDuplicateAutoConfiguration {
+public class PreventDuplicateAutoConfig {
 
     @Bean
     public PreventDuplicateAspect preventDuplicateAspect(RedisHelper redisHelper) {

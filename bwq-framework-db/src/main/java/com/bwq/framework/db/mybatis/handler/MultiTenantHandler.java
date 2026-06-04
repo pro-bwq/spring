@@ -54,7 +54,7 @@ public class MultiTenantHandler implements TenantLineHandler {
 
     @PostConstruct
     public void init() {
-        log.info("多租户忽略表配置 - 框架默认: {}, 业务自定义: {}",
+        log.debug("多租户忽略表配置 - 框架默认: {}, 业务自定义: {}",
                 DEFAULT_IGNORE_TABLES, customIgnoreTables);
     }
 

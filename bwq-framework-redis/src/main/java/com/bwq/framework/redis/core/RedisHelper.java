@@ -113,6 +113,30 @@ public class RedisHelper {
         return redisTemplate.opsForValue().increment(key, delta);
     }
 
+    /**
+     * 仅当 key 不存在时设置值（分布式锁基础方法）
+     *
+     * @param key 缓存 key
+     * @param value 缓存值
+     * @param timeout 过期时间
+     * @param unit 时间单位
+     * @return true 设置成功（获取锁成功），false key 已存在（获取锁失败）
+     */
+    public boolean setIfAbsent(String key, Object value, long timeout, TimeUnit unit) {
+        Boolean result = redisTemplate.opsForValue()
+                .setIfAbsent(key, value, timeout, unit);
+        return Boolean.TRUE.equals(result);
+    }
+
+    /**
+     * 仅当 key 不存在时设置值（无过期时间）
+     */
+    public boolean setIfAbsent(String key, Object value) {
+        Boolean result = redisTemplate.opsForValue().setIfAbsent(key, value);
+        return Boolean.TRUE.equals(result);
+    }
+
+
     // ==================== Hash 操作 ====================
 
     /**

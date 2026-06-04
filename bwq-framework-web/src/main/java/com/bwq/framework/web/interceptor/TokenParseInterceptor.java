@@ -1,11 +1,11 @@
 package com.bwq.framework.web.interceptor;
 
-import com.bwq.framework.common.constant.HeaderConstants;
 import com.bwq.framework.common.user.JwtUtils;
 import com.bwq.framework.common.user.UserInfo;
 import com.bwq.framework.common.user.UserContext;
 import com.bwq.framework.common.util.CommonConvertUtil;
 import com.bwq.framework.web.properties.JwtProperties;
+import com.bwq.framework.web.util.HandlerUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -15,10 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
 import java.io.IOException;
 
 /**
@@ -39,18 +37,16 @@ public class TokenParseInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 
-        String userId = request.getHeader(HeaderConstants.X_USER_ID);
-        if (userId != null && !userId.isEmpty()) {
-            log.debug("请求头已包含用户信息，跳过 Token 解析");
+        String path = request.getRequestURI();
+        log.debug("==TokenParseInterceptor，拦截器拦截====path={}",path);
+
+        //  检查 @Public 注解
+        if (HandlerUtil.isPublic(handler)) {
+            log.debug("@Public 接口，跳过 Token 解析: {}", path);
             return true;
         }
 
         String token = CommonConvertUtil.extractToken(request);
-        if (token == null) {
-            log.debug("请求中无 Token，匿名请求");
-            return true;
-        }
-
         try {
             UserInfo user = JwtUtils.parseToken(token, jwtProperties.getSecret());
             UserContext.setUser(user);
@@ -58,6 +54,7 @@ public class TokenParseInterceptor implements HandlerInterceptor {
             return true;
 
         } catch (ExpiredJwtException |SignatureException | MalformedJwtException e) {
+            log.error("=====token异常=====");
             throw e;
         }
     }
